@@ -1,0 +1,26 @@
+<project>
+	<name>Example Project</name>
+	<settings>
+		<defaultWidth>960</defaultWidth>
+		<defaultHeight>600</defaultHeight>
+		<workingDirectory>.</workingDirectory>
+	</settings>
+	<values>
+		<string name="title" default="biome" maxChars="12"/>
+	</values>
+	<tilesets>
+		<tileset name="tiles" image="editorSprites/debugSprites.png" tileWidth="32" tileHeight="32"/>
+	</tilesets>
+	<objects>
+		<object name="playerSpawn" image="editorSprites/ogmo.png" width="32" height="32"/>
+		<object name="redSling" image="editorSprites/redSling.png" width="32" height="32"/>
+		<object name="blackBlock" image="editorSprites/blackBlock.png" width="32" height="32"/>	
+		<object name="neutralBlock" image="editorSprites/neutralBlock.png" width="32" height="32"/>
+		<object name="goalObject" image="editorSprites/genericGoal.png" width="32" height="32"/>
+		<object name="neutralizer" image="editorSprites/neutralizer.png" width="32" height="32"/>
+	</objects>
+	<layers>
+		<objects name="objects" gridSize="32"/>
+		<tiles name="stage" gridSize="32" exportTileIDs="true" exportTileSize="true"/>
+	</layers>
+</project>
