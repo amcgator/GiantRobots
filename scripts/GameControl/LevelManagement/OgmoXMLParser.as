@@ -4,8 +4,9 @@ package GameControl.LevelManagement
 	import Constants.GameplayConstants;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import symbols.levelmanagement.Level;
-	import symbols.levelmanagement.OgmoTilemap;
+	import Symbols.GameObjects.LevelObjects.GenericBlock;
+	import GameControl.LevelManagement.Level;
+	import GameControl.LevelManagement.OgmoTilemap;
 	import Utils.ConfigFile;
 	/**
 	 * ...
@@ -51,7 +52,16 @@ package GameControl.LevelManagement
 		 */
 		private function FactoryObjects(obj:XML, level:Level):void
 		{
-			
+			for each (var spawn:XML in obj.playerSpawn) 
+			{
+				mCurrentLevel.mStartingSpawnPoint.x = Number(spawn.@x);
+				mCurrentLevel.mStartingSpawnPoint.y = Number(spawn.@y);
+			}
+			for each (var genericBlock:XML in obj.genericBlock)
+			{
+				var block:GenericBlock = new GenericBlock( Number(genericBlock.@x), Number(genericBlock.@y) );
+				mCurrentLevel.AddObject(block);
+			}
 		}
 		
 		public function get level():Level { return mCurrentLevel; }

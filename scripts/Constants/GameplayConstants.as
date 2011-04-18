@@ -13,10 +13,7 @@ package Constants
 		
 		public static const GAME_LEVELS:Array = 
 		[
-			"testLevel3.oel",
-			"testLevel2.oel",
-			"testLevel.oel",
-
+			"testLevel1.oel",
 		];
 	}
 

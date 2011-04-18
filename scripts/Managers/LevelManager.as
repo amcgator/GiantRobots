@@ -4,6 +4,7 @@ package Managers
 	import Constants.GameplayConstants;
 	import flash.events.Event;
 	import GameControl.LevelManagement.Level;
+	import GameControl.LevelManagement.OgmoXMLParser;
 	import Managers.GameEventManager;
 	import Utils.MathHelpers;
 	/**
@@ -43,9 +44,18 @@ package Managers
 			
 			Reset();
 			
+			//initialize our level variables
 			mCurrentLevel = null;
 			mCurrentLevelIndex = -1;
-						
+			
+			//create our xml parser for levels
+			mParser = new OgmoXMLParser();	
+			
+			//generate empty levels for each level we're making
+			for (var i:int = 0; i < GameplayConstants.GAME_LEVELS.length; i++) 
+			{
+				mLevels.push(new Level( GameplayConstants.GAME_LEVELS[i] ) );
+			}
 			
 		}
 		
@@ -143,13 +153,26 @@ package Managers
 				
 		private function LoadCurrentLevel():void
 		{
-			
+			mParser.addEventListener("LEVEL LOADED", OnLevelLoaded);
+			mParser.LoadLevel( mCurrentLevel, mCurrentLevel.GetFileName());
 		}
 		
 		private function UnloadCurrentLevel():void
 		{
-			
-			
+			if (mCurrentLevel != null)
+			{
+				mCurrentLevel.UnloadLevel();
+			}
+		}
+		
+		/**
+		 * Once the parser has loaded the level, set it up to run
+		 * @param	event
+		 */
+		private function OnLevelLoaded(event:Event):void
+		{
+			mCurrentLevel.Init();
+			mCurrentLevel.LoadLevel();
 		}
 			
 		//==================================================
@@ -169,6 +192,8 @@ package Managers
 		private var mCurrentLevelIndex:int;
 		//collection of levels 
 		private var mLevels:Array;
+		//our level parser
+		private var mParser:OgmoXMLParser;
 
 		
 	}
