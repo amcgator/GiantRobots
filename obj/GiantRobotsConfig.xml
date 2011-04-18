@@ -14,15 +14,15 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'4/16/2011'</value>
+      <value>'4/17/2011'</value>
     </define>
     <source-path append="true">
-      <path-element>F:\dev\Flash\GiantRobots\scripts</path-element>
-      <path-element>F:\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>E:\side_project\flash games\GiantRobots\scripts</path-element>
+      <path-element>E:\Programs\flashdev\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>F:\dev\Flash\GiantRobots\scripts\Main.as</path-element>
+    <path-element>E:\side_project\flash games\GiantRobots\scripts\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

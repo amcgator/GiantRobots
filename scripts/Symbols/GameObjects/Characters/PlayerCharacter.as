@@ -16,44 +16,34 @@ package Symbols.GameObjects.Characters
 		
 		public function PlayerCharacter(X:Number = 0, Y:Number = 0) 
 		{
-			super(X, Y);
-			
-			this.acceleration.y = GameplayConstants.GRAVITY;
-			this.maxVelocity.x = GameplayConstants.MAX_PLAYER_X_VELOCITY;
-			this.maxVelocity.y = GameplayConstants.MAX_PLAYER_Y_VELOCITY;
+			super(X, Y);	
+			this.createGraphic(1, 1);
 		}
 		
 		override public function update():void 
 		{
-			//handle key movement
-			if (FlxG.keys.A || FlxG.keys.LEFT)
-			{
-				this.acceleration.x = -200;
+			if (mCurrentlyControlled != null) {
+				mCurrentlyControlled.HandleInput();
 			}
-			else if (FlxG.keys.D || FlxG.keys.RIGHT)
-			{
-				this.acceleration.x = 200;
-			}
-			else
-			{
-				this.velocity.x = 0;
-				this.acceleration.x = 0;
-			}
-			
 			
 			super.update();
 		}
 		
-		public function Jump():void
-		{		
-			
+		public function SetCurrentlyControlled(GC:GameCharacter):void {
+			if (mCurrentlyControlled == null)
+			{
+				mCurrentlyControlled = GC;
+			}
+			else {
+				mCurrentlyControlled.CleanUp();
+				mCurrentlyControlled = GC;
+			}
 		}
 		
-		private function DebugGraphic():void
-		{
-			this.createGraphic(32, 32);
+		public function GetCurrentlyControlled():GameCharacter {
+			return mCurrentlyControlled;
 		}
-
+		
 		private var mCurrentlyControlled:GameCharacter;
 		
 	}
