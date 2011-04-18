@@ -11,6 +11,11 @@
 	<objects>
 		<object name="playerSpawn" image="editorSprites/ogmo.png" width="32" height="32"/>
 		<object name="genericBlock" image="editorSprites/neutralBlock.png" width="32" height="32"/>
+		<object name="ironMan" image="editorSprites/blackBlock.png" width="32" height="32">
+			<values>
+				<boolean name="active" default="false"/>
+			</values>
+		</object>
 	</objects>
 	<layers>
 		<objects name="objects" gridSize="32"/>

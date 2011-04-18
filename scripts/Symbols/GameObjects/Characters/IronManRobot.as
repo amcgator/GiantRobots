@@ -6,7 +6,7 @@ package Symbols.GameObjects.Characters
 	 * ...
 	 * @author Steve and Alicia
 	 */
-	public class IronManRobot extends GameCharacter 
+	public class IronManRobot extends ControllableCharacter 
 	{
 		
 		public function IronManRobot(X:Number = 0, Y:Number = 0) 

@@ -6,7 +6,7 @@ package Symbols.GameObjects.Characters
 	 * ...
 	 * @author Steve and Alicia
 	 */
-	public class EveryMan extends GameCharacter 
+	public class EveryMan extends ControllableCharacter 
 	{
 		
 		public function EveryMan(X:Number = 0, Y:Number = 0) 

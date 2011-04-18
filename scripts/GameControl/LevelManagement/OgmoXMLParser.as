@@ -4,6 +4,7 @@ package GameControl.LevelManagement
 	import Constants.GameplayConstants;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import Symbols.GameObjects.Characters.IronManRobot;
 	import Symbols.GameObjects.LevelObjects.GenericBlock;
 	import GameControl.LevelManagement.Level;
 	import GameControl.LevelManagement.OgmoTilemap;
@@ -60,6 +61,12 @@ package GameControl.LevelManagement
 			for each (var genericBlock:XML in obj.genericBlock)
 			{
 				var block:GenericBlock = new GenericBlock( Number(genericBlock.@x), Number(genericBlock.@y) );
+				mCurrentLevel.AddObject(block);
+			}
+			for each(var ironMan:XML in obj.ironMan)
+			{
+				var iron:IronManRobot = new IronManRobot( Number(ironMan.@x), Number(ironMan.@y) );
+				//deal with the "Active" value here
 				mCurrentLevel.AddObject(block);
 			}
 		}
