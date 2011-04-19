@@ -16,10 +16,14 @@ package Symbols.GameObjects.Characters
 			this.createGraphic(15, 35, 0xffff0000);
 		}
 		
+
+		override public function AI(): void 
+		{
+			//movement done when computer is the controller
+		}
+		
 		override public function HandleInput():void 
 		{
-			super.HandleInput();
-			
 			//handle key movement
 			if (FlxG.keys.A || FlxG.keys.LEFT)
 			{
@@ -38,7 +42,11 @@ package Symbols.GameObjects.Characters
 			if (FlxG.keys.SPACE) {
 				MarioJump();
 			}
-
+		}
+		
+		override public function Move(xDirection:int = 0, yDirection:int = 0):void
+		{
+		
 		}
 		/**
 		 * Overrides hitBottom to reset the jump time variable

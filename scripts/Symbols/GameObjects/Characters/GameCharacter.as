@@ -45,8 +45,12 @@ package Symbols.GameObjects.Characters
 		
 		public function HandleInput():void
 		{
-			//must override in subclasses
 		}
+		
+		public function AI(): void 
+		{
+		}
+				
 		
 		public function CleanUp():void
 		{

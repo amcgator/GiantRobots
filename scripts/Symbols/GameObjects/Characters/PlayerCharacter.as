@@ -92,7 +92,9 @@ package Symbols.GameObjects.Characters
 			if (mCurrentlyControlled != null) {
 				mCurrentlyControlled.HandleInput();
 			}
-			HandleInput();
+			else {
+				HandleInput();
+			}
 			super.update();
 		}
 		

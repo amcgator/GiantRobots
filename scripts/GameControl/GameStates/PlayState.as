@@ -12,6 +12,7 @@ package GameControl.GameStates
 	import org.flixel.FlxU;
 	import Symbols.GameObjects.Characters.GameCharacter;
 	import Symbols.GameObjects.Characters.IronManRobot;
+	import Symbols.GameObjects.Characters.NonPlayerCharacter;
 	import Symbols.GameObjects.Characters.PlayerCharacter
 	import Symbols.GameObjects.LevelObjects.GenericBlock;
 
@@ -49,7 +50,7 @@ package GameControl.GameStates
 			super.update();
 			
 			FlxU.collide(mPlayer, this.defaultGroup);
-			
+			FlxU.collide(mnonPlayer, this.defaultGroup);
 			FlxU.collide(ironManRobot, this.defaultGroup);
 			
 		}
@@ -57,20 +58,20 @@ package GameControl.GameStates
 		private function DebugLevel():void
 		{
 			mPlayer = new PlayerCharacter(300, 300);
+			mnonPlayer = new NonPlayerCharacter(350, 350);
 			
-			
-			var floor:GenericBlock = new GenericBlock(300 - 32, 400, 200, 20);
+			var floor:GenericBlock = new GenericBlock(300 - 32, 400, 1000, 20);
 			
 			ironManRobot = new IronManRobot(345, 365);
 
 			this.add(floor);
 			this.add(mPlayer);
-			
+			this.add(mnonPlayer);
 			this.add(ironManRobot);
 		}
 		
 		private var mPlayer:PlayerCharacter;
-		private var everyDude:GameCharacter;
+		private var mnonPlayer:NonPlayerCharacter;
 		private var ironManRobot:GameCharacter;
 		
 	}
