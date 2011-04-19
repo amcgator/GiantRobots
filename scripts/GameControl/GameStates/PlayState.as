@@ -10,7 +10,6 @@ package GameControl.GameStates
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxU;
-	import Symbols.GameObjects.Characters.EveryMan;
 	import Symbols.GameObjects.Characters.GameCharacter;
 	import Symbols.GameObjects.Characters.IronManRobot;
 	import Symbols.GameObjects.Characters.PlayerCharacter
@@ -49,20 +48,15 @@ package GameControl.GameStates
 		{
 			super.update();
 			
-			FlxU.collide(everyDude, this.defaultGroup);
+			FlxU.collide(mPlayer, this.defaultGroup);
 			
 			FlxU.collide(ironManRobot, this.defaultGroup);
 			
-			if (FlxU.collide(everyDude, ironManRobot)) {
-				trace("bumped into ironman, owie!");
-			}
 		}
 		
 		private function DebugLevel():void
 		{
-			mPlayer = new PlayerCharacter(0, 0);
-			everyDude = new EveryMan(300, 300);
-			mPlayer.SetCurrentlyControlled(everyDude);
+			mPlayer = new PlayerCharacter(300, 300);
 			
 			
 			var floor:GenericBlock = new GenericBlock(300 - 32, 400, 200, 20);
@@ -71,7 +65,6 @@ package GameControl.GameStates
 
 			this.add(floor);
 			this.add(mPlayer);
-			this.add(everyDude);
 			
 			this.add(ironManRobot);
 		}
