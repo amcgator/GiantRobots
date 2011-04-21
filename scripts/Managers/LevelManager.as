@@ -1,8 +1,10 @@
 package Managers 
 {
 	import caurina.transitions.Tweener;
+	import Constants.ConfigConstants;
 	import Constants.GameplayConstants;
 	import flash.events.Event;
+	import GameControl.CustomEvents.LevelEvent;
 	import GameControl.LevelManagement.Level;
 	import GameControl.LevelManagement.OgmoXMLParser;
 	import Managers.GameEventManager;
@@ -54,7 +56,7 @@ package Managers
 			//generate empty levels for each level we're making
 			for (var i:int = 0; i < GameplayConstants.GAME_LEVELS.length; i++) 
 			{
-				mLevels.push(new Level( GameplayConstants.GAME_LEVELS[i] ) );
+				AddLevel(new Level( GameplayConstants.GAME_LEVELS[i] ) );
 			}
 			
 		}
@@ -154,7 +156,7 @@ package Managers
 		private function LoadCurrentLevel():void
 		{
 			mParser.addEventListener("LEVEL LOADED", OnLevelLoaded);
-			mParser.LoadLevel( mCurrentLevel, mCurrentLevel.GetFileName());
+			mParser.LoadLevel( mCurrentLevel, ConfigConstants.LEVEL_PATH + mCurrentLevel.GetFileName());
 		}
 		
 		private function UnloadCurrentLevel():void
@@ -173,6 +175,9 @@ package Managers
 		{
 			mCurrentLevel.Init();
 			mCurrentLevel.LoadLevel();
+			
+			//send out the level loaded event for anyone listening
+			GameEventManager.GetInstance().dispatchEvent(new LevelEvent(LevelEvent.LEVEL_LOADED, mCurrentLevel));
 		}
 			
 		//==================================================

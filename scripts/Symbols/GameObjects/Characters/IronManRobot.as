@@ -14,6 +14,7 @@ package Symbols.GameObjects.Characters
 			super(X,Y);
 			mJumpTime = 0;
 			this.createGraphic(15, 35, 0xffff0000);
+			
 		}
 		
 
