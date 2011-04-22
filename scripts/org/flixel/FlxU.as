@@ -5,6 +5,8 @@ package org.flixel
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.getTimer;
+	import Symbols.GameObjects.Characters.IronManRobot;
+	import Symbols.GameObjects.Characters.PlayerCharacter;
 	
 	public class FlxU
 	{
@@ -461,24 +463,33 @@ package org.flixel
 					}
 					hit = true;
 					
+					if (Object1 is PlayerCharacter && Object2 is IronManRobot || Object1 is IronManRobot && Object2 is PlayerCharacter)
+					{
+						trace("debug");
+					}
+					
 					//Adjust the objects according to their flags and stuff
+					//scano - made changes here to include weights...commented out lines are original code
 					sv1 = Object2.velocity.x;
 					sv2 = Object1.velocity.x;
-					if(!Object1.fixed && Object2.fixed)
+					//if(!Object1.fixed && Object2.fixed)
+					if( (!Object1.fixed && Object2.fixed) || Object1.weight < Object2.weight )
 					{
 						if(Object1._group)
 							Object1.reset(Object1.x - overlap,Object1.y);
 						else
 							Object1.x -= overlap;
 					}
-					else if(Object1.fixed && !Object2.fixed)
+					//else if(Object1.fixed && !Object2.fixed)
+					else if( (Object1.fixed && !Object2.fixed) || Object1.weight > Object2.weight)
 					{
 						if(Object2._group)
 							Object2.reset(Object2.x + overlap,Object2.y);
 						else
 							Object2.x += overlap;
 					}
-					else if(!Object1.fixed && !Object2.fixed)
+					//else if(!Object1.fixed && !Object2.fixed )
+					else if(!Object1.fixed && !Object2.fixed && Object1.weight == Object2.weight)
 					{
 						overlap /= 2;
 						if(Object1._group)
@@ -657,23 +668,27 @@ package org.flixel
 					hit = true;
 					
 					//Adjust the objects according to their flags and stuff
+					//scano - added weight logic, original code is left commented out
 					sv1 = Object2.velocity.y;
 					sv2 = Object1.velocity.y;
-					if(!Object1.fixed && Object2.fixed)
+					//if(!Object1.fixed && Object2.fixed)
+					if( (!Object1.fixed && Object2.fixed) || Object1.weight < Object2.weight )
 					{
 						if(Object1._group)
 							Object1.reset(Object1.x, Object1.y - overlap);
 						else
 							Object1.y -= overlap;
 					}
-					else if(Object1.fixed && !Object2.fixed)
+					//else if(Object1.fixed && !Object2.fixed)
+					else if( (Object1.fixed && !Object2.fixed) || Object1.weight > Object2.weight )
 					{
 						if(Object2._group)
 							Object2.reset(Object2.x, Object2.y + overlap);
 						else
 							Object2.y += overlap;
 					}
-					else if(!Object1.fixed && !Object2.fixed)
+					//else if(!Object1.fixed && !Object2.fixed)
+					else if(!Object1.fixed && !Object2.fixed || Object1.weight == Object2.weight)
 					{
 						overlap /= 2;
 						if(Object1._group)

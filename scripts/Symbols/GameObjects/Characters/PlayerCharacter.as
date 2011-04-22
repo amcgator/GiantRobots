@@ -1,5 +1,6 @@
 package Symbols.GameObjects.Characters 
 {
+	import Constants.Enums.WeightClasses;
 	import Constants.GameplayConstants;
 	import flash.utils.Dictionary;
 	import GameControl.GameStates.PlayState;
@@ -21,6 +22,8 @@ package Symbols.GameObjects.Characters
 			//initialize default variables
 			mJumpTime = 0;
 			mContactCharacter = null;
+			
+			this.weight = WeightClasses.WEIGHT_PLAYER;
 			
 			//debug graphic
 			this.createGraphic(8, 8, 0xff112233);

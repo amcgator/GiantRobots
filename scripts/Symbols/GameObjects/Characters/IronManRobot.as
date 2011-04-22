@@ -1,5 +1,6 @@
 package Symbols.GameObjects.Characters 
 {
+	import Constants.Enums.WeightClasses;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	/**
@@ -14,7 +15,8 @@ package Symbols.GameObjects.Characters
 			super(X,Y);
 			mJumpTime = 0;
 			this.createGraphic(15, 35, 0xffff0000);
-			
+						
+			this.weight = WeightClasses.WEIGHT_ROBOTS;
 		}
 		
 
