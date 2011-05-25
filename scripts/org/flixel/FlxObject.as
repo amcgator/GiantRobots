@@ -182,6 +182,10 @@ package org.flixel
 		 * Added for Z sorting (scano)
 		 */
 		public var zSort:int;
+		/**
+		 * Weight added for collisions (scano)
+		 */
+		public var weight:Number;
 		
 		/**
 		 * Creates a new <code>FlxObject</code>.
@@ -238,6 +242,7 @@ package org.flixel
 			_group = false;
 			
 			zSort = 0;
+			weight = 1;
 		}
 		
 		/**
@@ -486,7 +491,8 @@ package org.flixel
 		 */
 		public function hitLeft(Contact:FlxObject,Velocity:Number):void
 		{
-			if(!fixed)
+			//scano added weight
+			if(!fixed && Contact.weight >= this.weight)
 				velocity.x = Velocity;
 		}
 		
@@ -509,7 +515,7 @@ package org.flixel
 		 */
 		public function hitTop(Contact:FlxObject,Velocity:Number):void
 		{
-			if(!fixed)
+			if(!fixed && Contact.weight >= this.weight)
 				velocity.y = Velocity;
 		}
 		

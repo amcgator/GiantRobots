@@ -1,5 +1,6 @@
 package Symbols.GameObjects.Characters 
 {
+	import Constants.Enums.WeightClasses;
 	import Constants.GameplayConstants;
 	import flash.utils.Dictionary;
 	import GameControl.GameStates.PlayState;
@@ -17,7 +18,14 @@ package Symbols.GameObjects.Characters
 		public function PlayerCharacter(X:Number = 0, Y:Number = 0) 
 		{
 			super(X, Y);	
+			
+			//initialize default variables
 			mJumpTime = 0;
+			mContactCharacter = null;
+			
+			this.weight = WeightClasses.WEIGHT_PLAYER;
+			
+			//debug graphic
 			this.createGraphic(8, 8, 0xff112233);
 		}
 		
@@ -25,26 +33,54 @@ package Symbols.GameObjects.Characters
 		{
 			super.HandleInput();	
 			
-			
-			//handle key movement
-			if (FlxG.keys.A || FlxG.keys.LEFT)
+			if (mCurrentlyControlled != null)
 			{
-				this.acceleration.x = -200;
-			}
-			else if (FlxG.keys.D || FlxG.keys.RIGHT)
-			{
-				this.acceleration.x = 200;
+				mCurrentlyControlled.HandleInput();
+				
+				//check for eject
+				if (FlxG.keys.justPressed("ENTER"))
+				{
+					SetCurrentlyControlled(null);
+				}
 			}
 			else
 			{
-				this.velocity.x = 0;
-				this.acceleration.x = 0;
-			}
+				//handle key movement
+				//move left
+				if (FlxG.keys.A || FlxG.keys.LEFT)
+				{
+					this.acceleration.x = -200;
+				}
+				//move right
+				else if (FlxG.keys.D || FlxG.keys.RIGHT)
+				{
+					this.acceleration.x = 200;
+				}
+				//no horizontal movement
+				else
+				{
+					this.velocity.x = 0;
+					this.acceleration.x = 0;
+				}
 
-			if (FlxG.keys.SPACE) {
-				MarioJump();
+				//jump
+				if (FlxG.keys.SPACE) 
+				{
+					MarioJump();
+				}
+				//take control of object we're touching
+				if (FlxG.keys.justPressed("ENTER"))
+				{
+					if (mContactCharacter != null && mCurrentlyControlled == null)
+					{
+						mContactCharacter.TakeControl(this);
+						SetCurrentlyControlled(mContactCharacter);
+					}
+				}
+					
+				//reset getting touched
+				mContactCharacter = null;
 			}
-
 		}
 		/**
 		 * Overrides hitBottom to reset the jump time variable
@@ -57,6 +93,15 @@ package Symbols.GameObjects.Characters
 			super.hitBottom(Contact, Velocity);
 			
 			mJumpTime = 0;
+		}
+		override public function hitRight(Contact:FlxObject, Velocity:Number):void 
+		{
+			super.hitRight(Contact, Velocity);
+			
+			if (Contact is ControllableCharacter)
+			{
+				mContactCharacter = Contact as ControllableCharacter;
+			}
 		}
 		
 		/**
@@ -89,23 +134,36 @@ package Symbols.GameObjects.Characters
 		
 		override public function update():void 
 		{
-			if (mCurrentlyControlled != null) {
-				mCurrentlyControlled.HandleInput();
+			if (mCurrentlyControlled != null)
+			{				
+				//move along with this
+				this.x = mCurrentlyControlled.x;
+				this.y = mCurrentlyControlled.y;
 			}
-			else {
-				HandleInput();
-			}
+			
+			HandleInput();
+			
 			super.update();
 		}
 		
-		public function SetCurrentlyControlled(GC:ControllableCharacter):void {
+		public function SetCurrentlyControlled(character:ControllableCharacter):void {
 			if (mCurrentlyControlled == null)
 			{
-				mCurrentlyControlled = GC;
+				mCurrentlyControlled = character;
+				
+				//debug "dissapear"
+				this.alpha = 0;
+				this.solid = false;
+				this.fixed = true;
 			}
-			else {
+			else 
+			{
 				mCurrentlyControlled.CleanUp();
-				mCurrentlyControlled = GC;
+				mCurrentlyControlled = character;
+				
+				this.alpha = 1 ;
+				this.solid = true;
+				this.fixed = false;
 			}
 		}
 		
@@ -119,6 +177,8 @@ package Symbols.GameObjects.Characters
 		//=========================================================
 		private var mJumpTime:Number;	
 		private var mCurrentlyControlled:ControllableCharacter;
+		
+		private var mContactCharacter:ControllableCharacter;
 		
 	}
 
