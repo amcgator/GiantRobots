@@ -1,6 +1,8 @@
 package GameControl.GameStates 
 {
 	import Constants.ConfigConstants;
+	import flash.geom.Point;
+	import GameControl.CustomEvents.LevelEvent;
 	import Managers.GameEventManager;
 	import Managers.HUDManager;
 	import Managers.LevelManager;
@@ -39,11 +41,28 @@ package GameControl.GameStates
 			RulesManager.Create();
 			HUDManager.Create();
 			
-			DebugLevel();
+			//initialize all of the managers
+			GameEventManager.GetInstance().Init();
+			RulesManager.GetInstance().Init();
+			HUDManager.GetInstance().Init();
+			LevelManager.GetInstance().Init();
 			
-		}
+			//add event listener for level loading
+			GameEventManager.GetInstance().SubscribeToEvent(this,LevelEvent.LEVEL_LOADED);
+			this.addEventListener(LevelEvent.LEVEL_LOADED, OnLevelLoaded);
+			
+			//start up the first level
+			LevelManager.GetInstance().NextLevel();
 
-		public function get player():PlayerCharacter { return mPlayer; }
+		}
+			
+		/**
+		 * Returns the player
+		 */
+		public function get player():PlayerCharacter 
+		{ 
+			return mPlayer; 
+		}
 		
 		override public function update():void 
 		{
@@ -70,6 +89,25 @@ package GameControl.GameStates
 			this.add(ironManRobot);
 		}
 		
+		/**
+		 * Event handler for when the level is done loading. Puts the player in place
+		 */
+		private function OnLevelLoaded(event:LevelEvent):void
+		{
+			var spawnPoint:Point = event.level.GetSpawnPoint();
+			
+			mPlayer = new PlayerCharacter( spawnPoint.x, spawnPoint.y);
+			
+			this.add(mPlayer);
+			
+			//debug
+			ironManRobot = new IronManRobot(mPlayer.x + 100, mPlayer.y);
+			this.add(ironManRobot);
+		}
+		
+		//=====================================================
+		/// Member variables
+		//=====================================================
 		private var mPlayer:PlayerCharacter;
 		private var mnonPlayer:NonPlayerCharacter;
 		private var ironManRobot:GameCharacter;
